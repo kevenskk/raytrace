@@ -1,0 +1,33 @@
+\doxysection{ray.\+h}
+\hypertarget{ray_8h_source}{}\label{ray_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ RAY\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ RAY\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}vec3.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structray}{ray}}\ \{}
+\DoxyCodeLine{00007\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00008\ \ \ \ \ \mbox{\hyperlink{structray}{ray}}()\ \{\}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \ \ \ \ \mbox{\hyperlink{structray}{ray}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{point3}}\&\ origin,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{vec3}}\&\ direction)\ :\ o(origin),\ d(direction)\ \{\}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classvec3}{point3}}\ origin()\textcolor{keyword}{\ const\ \ }\{\ \textcolor{keywordflow}{return}\ o;\ \}}
+\DoxyCodeLine{00013\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classvec3}{vec3}}\ direction()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ d;\ \}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{classvec3}{point3}}\ pointAtT(\textcolor{keywordtype}{double}\ t)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ o\ +\ t*d;}
+\DoxyCodeLine{00018\ \ \ \ \ \}}
+\DoxyCodeLine{00019\ \ \ \ \ }
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{classvec3}{point3}}\ o;}
+\DoxyCodeLine{00023\ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ d;}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordtype}{float}\ tMin\ =\ 0.001;}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{float}\ tMax\ =\ infinity;}
+\DoxyCodeLine{00026\ \};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

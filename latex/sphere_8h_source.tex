@@ -1,0 +1,61 @@
+\doxysection{sphere.\+h}
+\hypertarget{sphere_8h_source}{}\label{sphere_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ SPHERE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ SPHERE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}hittableobjects.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}vec3.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classsphere}{sphere}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classhittable}{hittable}}\ \{}
+\DoxyCodeLine{00008\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00009\ \ \ \ \ \mbox{\hyperlink{classsphere}{sphere}}(\mbox{\hyperlink{classvec3}{point3}}\ \_centre,\ \textcolor{keywordtype}{double}\ \_radius,\ shared\_ptr<material>\ \mbox{\hyperlink{classmaterial}{material}})\ :\ centre(\_centre),\ radius(\_radius),\ m(\mbox{\hyperlink{classmaterial}{material}})\ \{\}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keywordtype}{bool}\ hit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structray}{ray}}\&\ r,\ \mbox{\hyperlink{classinterval}{interval}}\ tmintmax,\ \mbox{\hyperlink{classhit_record}{hitRecord}}\&\ rec)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ oc\ =\ r.origin()\ -\/\ centre;}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ A\ =\ r.direction().length\_squared();}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ halfB\ =\ dot(oc,\ r.direction());}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ C\ =\ oc.length\_squared()\ -\/\ radius*radius;}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ discriminant\ =\ halfB*halfB\ -\/\ A*C;}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (discriminant\ <\ 0)\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ sqrtd\ =\ sqrt(discriminant);}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ root\ =\ (-\/halfB\ -\/\ sqrtd)\ /\ A;}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!tmintmax.surrounds(root))\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ root\ =\ (-\/halfB\ +\ sqrtd)\ /\ A;}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!tmintmax.surrounds(root))}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ rec.t\ =\ root;}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ rec.p\ =\ r.pointAtT(rec.t);}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ outward\_normal\ =\ (rec.p\ -\/\ centre)\ /\ radius;}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ rec.set\_face\_normal(r,\ outward\_normal);}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ getUV(outward\_normal,\ rec.u,\ rec.v);}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ rec.m\ =\ m;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00039\ \ \ \ }
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{classvec3}{point3}}\ centre;}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{double}\ radius;}
+\DoxyCodeLine{00042\ \ \ \ \ shared\_ptr<material>\ m;}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ getUV(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{point3}}\&\ p,\textcolor{keywordtype}{double}\&\ u,\ \textcolor{keywordtype}{double}\&\ v)\{}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \textcolor{comment}{//\ return\ 2d/uv\ coordinates\ of\ a\ given\ point\ on\ the\ sphere}}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ theta\ =\ acos(-\/p.y());}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ phi\ =\ atan2(-\/p.z(),\ p.x())\ +\ pi;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ u\ =\ phi\ /\ (2*pi);}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ v\ =\ theta/\ pi;}
+\DoxyCodeLine{00053\ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

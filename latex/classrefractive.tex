@@ -1,0 +1,44 @@
+\doxysection{refractive Class Reference}
+\hypertarget{classrefractive}{}\label{classrefractive}\index{refractive@{refractive}}
+
+
+Inheritance diagram for refractive\+:
+% FIG 0
+
+
+Collaboration diagram for refractive\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classrefractive_acea3fa505ad877e4fb12961596b495c0}\label{classrefractive_acea3fa505ad877e4fb12961596b495c0} 
+{\bfseries refractive} (\mbox{\hyperlink{classvec3}{colour}} a, double n1, double n2)
+\item 
+\Hypertarget{classrefractive_a28a3d8f758bfef6ff8f13b0725ffc9bd}\label{classrefractive_a28a3d8f758bfef6ff8f13b0725ffc9bd} 
+void {\bfseries set\+Albedo} (const \mbox{\hyperlink{classvec3}{colour}} \&new\+Albedo)
+\item 
+bool \mbox{\hyperlink{classrefractive_a7d853f750168ac34f5e275934ca0be5a}{scatter}} (const \mbox{\hyperlink{structray}{ray}} \&r, const \mbox{\hyperlink{classhit_record}{hit\+Record}} \&rec, \mbox{\hyperlink{classvec3}{colour}} \&attenuation, \mbox{\hyperlink{structray}{ray}} \&scattered) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classmaterial}{material}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classvec3}{colour}} {\bfseries emitted} (double u, double v, const \mbox{\hyperlink{classvec3}{point3}} \&p) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classrefractive_a7d853f750168ac34f5e275934ca0be5a}\label{classrefractive_a7d853f750168ac34f5e275934ca0be5a} 
+\index{refractive@{refractive}!scatter@{scatter}}
+\index{scatter@{scatter}!refractive@{refractive}}
+\doxysubsubsection{\texorpdfstring{scatter()}{scatter()}}
+{\footnotesize\ttfamily bool refractive\+::scatter (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structray}{ray}} \&}]{r,  }\item[{const \mbox{\hyperlink{classhit_record}{hit\+Record}} \&}]{rec,  }\item[{\mbox{\hyperlink{classvec3}{colour}} \&}]{attenuation,  }\item[{\mbox{\hyperlink{structray}{ray}} \&}]{scattered }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classmaterial}{material}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+material.\+h\end{DoxyCompactItemize}

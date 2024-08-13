@@ -1,0 +1,47 @@
+\doxysection{diffuse Class Reference}
+\hypertarget{classdiffuse}{}\label{classdiffuse}\index{diffuse@{diffuse}}
+
+
+Inheritance diagram for diffuse\+:
+% FIG 0
+
+
+Collaboration diagram for diffuse\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classdiffuse_a59004876dad85f9a9dc8029ab4bac63a}\label{classdiffuse_a59004876dad85f9a9dc8029ab4bac63a} 
+{\bfseries diffuse} (const \mbox{\hyperlink{classvec3}{colour}} \&a)
+\item 
+\Hypertarget{classdiffuse_aab0f0aea3f9e23eda3dac1f7089ed3cd}\label{classdiffuse_aab0f0aea3f9e23eda3dac1f7089ed3cd} 
+{\bfseries diffuse} (shared\+\_\+ptr$<$ \mbox{\hyperlink{classtexture}{texture}} $>$ a)
+\item 
+\Hypertarget{classdiffuse_a2fa42baba4e11eaa515ea9efaab48f8f}\label{classdiffuse_a2fa42baba4e11eaa515ea9efaab48f8f} 
+void {\bfseries set\+Albedo} (const \mbox{\hyperlink{classvec3}{colour}} \&new\+Albedo)
+\item 
+bool \mbox{\hyperlink{classdiffuse_a642bcccb972f1432732239a8ff5d7a84}{scatter}} (const \mbox{\hyperlink{structray}{ray}} \&r, const \mbox{\hyperlink{classhit_record}{hit\+Record}} \&rec, \mbox{\hyperlink{classvec3}{colour}} \&attenuation, \mbox{\hyperlink{structray}{ray}} \&scattered) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classmaterial}{material}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classvec3}{colour}} {\bfseries emitted} (double u, double v, const \mbox{\hyperlink{classvec3}{point3}} \&p) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classdiffuse_a642bcccb972f1432732239a8ff5d7a84}\label{classdiffuse_a642bcccb972f1432732239a8ff5d7a84} 
+\index{diffuse@{diffuse}!scatter@{scatter}}
+\index{scatter@{scatter}!diffuse@{diffuse}}
+\doxysubsubsection{\texorpdfstring{scatter()}{scatter()}}
+{\footnotesize\ttfamily bool diffuse\+::scatter (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structray}{ray}} \&}]{r,  }\item[{const \mbox{\hyperlink{classhit_record}{hit\+Record}} \&}]{rec,  }\item[{\mbox{\hyperlink{classvec3}{colour}} \&}]{attenuation,  }\item[{\mbox{\hyperlink{structray}{ray}} \&}]{scattered }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classmaterial}{material}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+material.\+h\end{DoxyCompactItemize}

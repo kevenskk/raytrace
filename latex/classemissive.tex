@@ -1,0 +1,51 @@
+\doxysection{emissive Class Reference}
+\hypertarget{classemissive}{}\label{classemissive}\index{emissive@{emissive}}
+
+
+Inheritance diagram for emissive\+:
+% FIG 0
+
+
+Collaboration diagram for emissive\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classemissive_ac76bab288752ea6b206fa22d69fc0cc8}\label{classemissive_ac76bab288752ea6b206fa22d69fc0cc8} 
+{\bfseries emissive} (shared\+\_\+ptr$<$ \mbox{\hyperlink{classtexture}{texture}} $>$ a)
+\item 
+\Hypertarget{classemissive_a8896c710103a717aa35bb0fcaf3c2070}\label{classemissive_a8896c710103a717aa35bb0fcaf3c2070} 
+{\bfseries emissive} (\mbox{\hyperlink{classvec3}{colour}} c)
+\item 
+bool \mbox{\hyperlink{classemissive_a3d1d26fa7ed5e02781d6b60657a67e67}{scatter}} (const \mbox{\hyperlink{structray}{ray}} \&r\+\_\+in, const \mbox{\hyperlink{classhit_record}{hit\+Record}} \&rec, \mbox{\hyperlink{classvec3}{colour}} \&attenuation, \mbox{\hyperlink{structray}{ray}} \&scattered) const override
+\item 
+\mbox{\hyperlink{classvec3}{colour}} \mbox{\hyperlink{classemissive_a4c3b26732ea897f8dfbb0d2d06c2f08e}{emitted}} (double u, double v, const \mbox{\hyperlink{classvec3}{point3}} \&p) const override
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classemissive_a4c3b26732ea897f8dfbb0d2d06c2f08e}\label{classemissive_a4c3b26732ea897f8dfbb0d2d06c2f08e} 
+\index{emissive@{emissive}!emitted@{emitted}}
+\index{emitted@{emitted}!emissive@{emissive}}
+\doxysubsubsection{\texorpdfstring{emitted()}{emitted()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classvec3}{colour}} emissive\+::emitted (\begin{DoxyParamCaption}\item[{double}]{u,  }\item[{double}]{v,  }\item[{const \mbox{\hyperlink{classvec3}{point3}} \&}]{p }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmaterial}{material}}.
+
+\Hypertarget{classemissive_a3d1d26fa7ed5e02781d6b60657a67e67}\label{classemissive_a3d1d26fa7ed5e02781d6b60657a67e67} 
+\index{emissive@{emissive}!scatter@{scatter}}
+\index{scatter@{scatter}!emissive@{emissive}}
+\doxysubsubsection{\texorpdfstring{scatter()}{scatter()}}
+{\footnotesize\ttfamily bool emissive\+::scatter (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structray}{ray}} \&}]{r\+\_\+in,  }\item[{const \mbox{\hyperlink{classhit_record}{hit\+Record}} \&}]{rec,  }\item[{\mbox{\hyperlink{classvec3}{colour}} \&}]{attenuation,  }\item[{\mbox{\hyperlink{structray}{ray}} \&}]{scattered }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classmaterial}{material}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+material.\+h\end{DoxyCompactItemize}

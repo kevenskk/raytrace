@@ -1,0 +1,48 @@
+\doxysection{hittable\+List Class Reference}
+\hypertarget{classhittable_list}{}\label{classhittable_list}\index{hittableList@{hittableList}}
+
+
+Inheritance diagram for hittable\+List\+:
+% FIG 0
+
+
+Collaboration diagram for hittable\+List\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classhittable_list_aabd48a10e782a0263466799218e17419}\label{classhittable_list_aabd48a10e782a0263466799218e17419} 
+{\bfseries hittable\+List} (shared\+\_\+ptr$<$ \mbox{\hyperlink{classhittable}{hittable}} $>$ object)
+\item 
+\Hypertarget{classhittable_list_a4b1d4e1f4f48fa998f50219c746d29f4}\label{classhittable_list_a4b1d4e1f4f48fa998f50219c746d29f4} 
+void {\bfseries clear} ()
+\item 
+\Hypertarget{classhittable_list_a3da0ff0a1ee5c045d5cd7cf52269d36d}\label{classhittable_list_a3da0ff0a1ee5c045d5cd7cf52269d36d} 
+void {\bfseries add} (shared\+\_\+ptr$<$ \mbox{\hyperlink{classhittable}{hittable}} $>$ object)
+\item 
+bool \mbox{\hyperlink{classhittable_list_ab8ad9241c209e699a37ba0039780d48e}{hit}} (const \mbox{\hyperlink{structray}{ray}} \&r, \mbox{\hyperlink{classinterval}{interval}} tmintmax, \mbox{\hyperlink{classhit_record}{hit\+Record}} \&rec) const override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classhittable_list_ae9ca30e0e74deb089c93b3060a596cbf}\label{classhittable_list_ae9ca30e0e74deb089c93b3060a596cbf} 
+std\+::vector$<$ shared\+\_\+ptr$<$ \mbox{\hyperlink{classhittable}{hittable}} $>$ $>$ {\bfseries objects}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classhittable_list_ab8ad9241c209e699a37ba0039780d48e}\label{classhittable_list_ab8ad9241c209e699a37ba0039780d48e} 
+\index{hittableList@{hittableList}!hit@{hit}}
+\index{hit@{hit}!hittableList@{hittableList}}
+\doxysubsubsection{\texorpdfstring{hit()}{hit()}}
+{\footnotesize\ttfamily bool hittable\+List\+::hit (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structray}{ray}} \&}]{r,  }\item[{\mbox{\hyperlink{classinterval}{interval}}}]{tmintmax,  }\item[{\mbox{\hyperlink{classhit_record}{hit\+Record}} \&}]{rec }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classhittable}{hittable}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+hittablelist.\+h\end{DoxyCompactItemize}

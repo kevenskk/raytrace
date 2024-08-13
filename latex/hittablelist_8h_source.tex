@@ -1,0 +1,49 @@
+\doxysection{hittablelist.\+h}
+\hypertarget{hittablelist_8h_source}{}\label{hittablelist_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ HITTABLE\_LIST\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ HITTABLE\_LIST\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}hittableobjects.h"{}}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{using\ }std::shared\_ptr;}
+\DoxyCodeLine{00010\ \textcolor{keyword}{using\ }std::make\_shared;}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhittable_list}{hittableList}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classhittable}{hittable}}\ \{}
+\DoxyCodeLine{00013\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ std::vector<shared\_ptr<hittable>>\ objects;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{classhittable_list}{hittableList}}()\ \{\}}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{classhittable_list}{hittableList}}(shared\_ptr<hittable>\ \textcolor{keywordtype}{object})\ \{\ add(\textcolor{keywordtype}{object});\ \}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keywordtype}{void}\ clear()\ \{\ objects.clear();\ \}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordtype}{void}\ add(shared\_ptr<hittable>\ \textcolor{keywordtype}{object})\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ objects.push\_back(\textcolor{keywordtype}{object});}
+\DoxyCodeLine{00023\ \ \ \ \ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordtype}{bool}\ hit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structray}{ray}}\&\ r,\ \mbox{\hyperlink{classinterval}{interval}}\ tmintmax,\ \mbox{\hyperlink{classhit_record}{hitRecord}}\&\ rec)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classhit_record}{hitRecord}}\ tempRec;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ succesfulHit\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ closestHit\ =\ tmintmax.max;}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ \textcolor{keywordtype}{object}\ :\ objects)\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (object-\/>hit(r,\ \mbox{\hyperlink{classinterval}{interval}}(tmintmax.min,\ closestHit),\ tempRec))\ \{}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ succesfulHit\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ closestHit\ =\ tempRec.t;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rec\ =\ tempRec;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ succesfulHit;}
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+\DoxyCodeLine{00042\ \};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

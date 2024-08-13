@@ -1,0 +1,58 @@
+\doxysection{texture.\+h}
+\hypertarget{texture_8h_source}{}\label{texture_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ TEXTURE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ TEXTURE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}helper.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}colour.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}stbimage.h"{}}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classtexture}{texture}}\ \{}
+\DoxyCodeLine{00009\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classtexture}{\string~texture}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classvec3}{colour}}\ value(\textcolor{keywordtype}{double}\ u,\ \textcolor{keywordtype}{double}\ v,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{point3}}\&\ p)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00013\ \};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classsolid__colour}{solid\_colour}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classtexture}{texture}}\ \{}
+\DoxyCodeLine{00016\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{classsolid__colour}{solid\_colour}}(\mbox{\hyperlink{classvec3}{colour}}\ c)\ :\ colour\_value(c)\ \{\}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{classsolid__colour}{solid\_colour}}(\textcolor{keywordtype}{double}\ red,\ \textcolor{keywordtype}{double}\ green,\ \textcolor{keywordtype}{double}\ blue)\ :\ \mbox{\hyperlink{classsolid__colour}{solid\_colour}}(\mbox{\hyperlink{classvec3}{colour}}(red,green,blue))\ \{\}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classvec3}{colour}}\ value(\textcolor{keywordtype}{double}\ u,\ \textcolor{keywordtype}{double}\ v,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{point3}}\&\ p)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ colour\_value;}
+\DoxyCodeLine{00023\ \ \ \ \ \}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{classvec3}{colour}}\ colour\_value;}
+\DoxyCodeLine{00027\ \};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classsurfacetexture}{surfacetexture}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classtexture}{texture}}\ \{}
+\DoxyCodeLine{00030\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \mbox{\hyperlink{classsurfacetexture}{surfacetexture}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ filename)\ :\ image(filename)\ \{\}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \mbox{\hyperlink{classvec3}{colour}}\ value(\textcolor{keywordtype}{double}\ u,\ \textcolor{keywordtype}{double}\ v,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{point3}}\&\ p)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (image.height()\ <=\ 0)\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classvec3}{colour}}(0,1,1);}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ u\ =\ \mbox{\hyperlink{classinterval}{interval}}(0,1).clamp(u);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ v\ =\ 1.0\ -\/\ \mbox{\hyperlink{classinterval}{interval}}(0,1).clamp(v);\ \ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ i\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(u\ *\ image.width());}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ j\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(v\ *\ image.height());}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pixel\ =\ image.pixel\_data(i,j);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ scale\ =\ 1.0\ /\ 255.0;}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classvec3}{colour}}(scale*pixel[0],\ scale*pixel[1],\ scale*pixel[2]);}
+\DoxyCodeLine{00045\ \ \ \ \ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00048\ \ \ \ \ \mbox{\hyperlink{classstbimage}{stbimage}}\ image;}
+\DoxyCodeLine{00049\ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

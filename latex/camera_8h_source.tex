@@ -1,0 +1,262 @@
+\doxysection{camera.\+h}
+\hypertarget{camera_8h_source}{}\label{camera_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ CAMERA\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ CAMERA\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}helper.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}ray.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}colour.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}hittableobjects.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ "{}material.h"{}}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <SDL2/SDL.h>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <bits/stdc++.h>}\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ "{}imgui.h"{}}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ "{}imgui\_impl\_sdl2.h"{}}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}imgui\_impl\_sdlrenderer2.h"{}}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{keyword}{using\ namespace\ }std;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keywordtype}{bool}\ running\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ SDL\_Event\ event;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keywordtype}{bool}\ rendered;}
+\DoxyCodeLine{00026\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *title\ =\ \textcolor{stringliteral}{"{}Kevin\ Ray\ Tracer"{}};}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_camera}{Camera}}\ \{}
+\DoxyCodeLine{00029\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00030\ \ \ \ \ \mbox{\hyperlink{class_camera}{Camera}}(SDL\_Window*\ window,\ SDL\_Renderer*\ renderer)\ :\ window(window),\ renderer(renderer)\ \{\}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ SDL\_Renderer\ *renderer;}
+\DoxyCodeLine{00033\ \ \ \ \ SDL\_Window\ *window;}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{double}\ aspectRatio;\ \ \textcolor{comment}{//\ aspect\ ratio\ of\ the\ image}}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ imgwidth;\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{int}\ imgheight;\ \ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{int}\ \ \ \ spp;\ \ \textcolor{comment}{//\ number\ of\ random\ samples/camera\ rays\ for\ each\ pixel}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{int}\ bounces;\ \ \textcolor{comment}{//\ \ number\ of\ bounces\ for\ a\ camera\ ray}}
+\DoxyCodeLine{00041\ \ \ \ \ \mbox{\hyperlink{classvec3}{colour}}\ bg;}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{int}\ fov;}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \mbox{\hyperlink{classvec3}{point3}}\ cameraPosition\ =\ \mbox{\hyperlink{classvec3}{point3}}(0,\ 0,\ -\/1);\ \textcolor{comment}{//\ position\ of\ camera}}
+\DoxyCodeLine{00046\ \ \ \ \ \mbox{\hyperlink{classvec3}{point3}}\ cameraLookAt\ =\ \mbox{\hyperlink{classvec3}{point3}}(0,\ 0,\ 0);\ \textcolor{comment}{//\ direction\ camera\ is\ looking\ at}}
+\DoxyCodeLine{00047\ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ cameraUp\ =\ \mbox{\hyperlink{classvec3}{vec3}}(0,\ 1,\ 0);\ \textcolor{comment}{//\ up\ direction\ of\ camera}}
+\DoxyCodeLine{00048\ \ \ \ \ }
+\DoxyCodeLine{00049\ \ \ \ \ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}\ input()\ \{\ \textcolor{comment}{//\ handle\ SDL\ events}}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (SDL\_PollEvent(\&event))\ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ ImGui\_ImplSDL2\_ProcessEvent(\&event);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (event.type\ ==\ SDL\_QUIT)\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ running\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ SDL\_DestroyRenderer(renderer);}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ SDL\_DestroyWindow(window);}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ SDL\_Quit();}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ exit(0);}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (event.type\ ==\ SDL\_WINDOWEVENT)\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}\ (event.window.event)\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SDL\_WINDOWEVENT\_MOVED:}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n\ Window\ moved"{}}\ <<\ \textcolor{keyword}{event}.window.data1\ <<\ \textcolor{stringliteral}{"{},\ "{}}\ <<\ \textcolor{keyword}{event}.window.data2\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SDL\_WINDOWEVENT\_FOCUS\_LOST:}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n\ Window\ lost\ focus\(\backslash\)n"{}};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ SDL\_WINDOWEVENT\_FOCUS\_GAINED:}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n\ Window\ gained\ focus\(\backslash\)n"{}};}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00076\ \ \ \ \ \}}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ }
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{void}\ render(\textcolor{keyword}{const}\ \mbox{\hyperlink{classhittable}{hittable}}\&\ scene)\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ initialize();}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ SDL\_SetWindowSize(window,\ imgwidth,\ imgheight);}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ SDL\_SetWindowPosition(window,\ SDL\_WINDOWPOS\_CENTERED,\ SDL\_WINDOWPOS\_CENTERED);}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}P3\(\backslash\)n"{}}\ <<\ imgwidth\ <<\ \textcolor{charliteral}{'\ '}\ <<\ imgheight\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n255\(\backslash\)n"{}};}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ start\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ rendered\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ imgheight;\ ++j)\ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)r\ Rows\ remaining:\ "{}}\ <<\ (imgheight\ -\/\ j)\ <<\ \textcolor{charliteral}{'\ '}\ <<\ std::flush;}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ imgwidth;\ ++i)\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classvec3}{colour}}\ pixelColour(0,0,0);}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ s\ =\ 0;\ s\ <\ spp;\ ++s)\ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structray}{ray}}\ r\ =\ getRay(i,\ j);}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pixelColour\ +=\ getRayColour(r,bounces,\ scene);}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ r\ =\ pixelColour.r();}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ g\ =\ pixelColour.g();}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ b\ =\ pixelColour.b();}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ scale\ =\ 1.0\ /\ spp;\ }
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ r\ =\ sqrt(r*scale);\ }
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ g\ =\ sqrt(g*scale);}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ sqrt(b*scale);}
+\DoxyCodeLine{00114\ \ \ }
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classinterval}{interval}}\ rgb(0.000,\ 0.999);\ }
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_SetRenderDrawColor(renderer,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(256\ *\ rgb.clamp(r)),\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(256\ *\ rgb.clamp(g)),\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(256\ *\ rgb.clamp(b)),\ 255);\ \ \ \ \ \ \ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderDrawPoint(renderer,\ i,\ j);}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ input();}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ drawColour(std::cout,\ pixelColour,\ spp);}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ draw\ to\ sdl\ window}}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(i\ \%\ imgwidth\ ==\ 1)\ \ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SDL\_RenderPresent(renderer);}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00145\ \ \ \ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ execute\ after\ render\ has\ completed}}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ rendered\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ end\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ rendertime\ =\ std::chrono::duration\_cast<std::chrono::duration<double>>(end\ -\/\ start);}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)nRender\ time:\ "{}}\ <<\ rendertime.count()\ <<\ \textcolor{stringliteral}{"{}\ seconds\(\backslash\)n"{}};}
+\DoxyCodeLine{00155\ }
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(rendered\ ==\ \textcolor{keyword}{true})\{}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ input();}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ }
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00162\ \ \ \ }
+\DoxyCodeLine{00163\ \ \ }
+\DoxyCodeLine{00164\ \ \ \ \ \ \ }
+\DoxyCodeLine{00165\ \ \ \ \ \ \ }
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ }
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \}}
+\DoxyCodeLine{00170\ }
+\DoxyCodeLine{00171\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00172\ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ u,v,w;}
+\DoxyCodeLine{00173\ \ \ \ \ \mbox{\hyperlink{classvec3}{point3}}\ cameraCentre;\ }
+\DoxyCodeLine{00174\ \ \ \ \ \mbox{\hyperlink{classvec3}{point3}}\ pixelUpperLeft;\ \ \ }
+\DoxyCodeLine{00175\ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ \ \ pixelDeltaU;\ \ }
+\DoxyCodeLine{00176\ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ \ \ pixelDeltaV;\ \ }
+\DoxyCodeLine{00177\ \ \ \ \ }
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{void}\ initialize()\ \{}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ imgheight\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(imgwidth\ /\ aspectRatio);}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ imgheight\ =\ (imgheight\ <\ 1)\ ?\ 1\ :\ imgheight;}
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ cameraCentre\ =\ cameraPosition;}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ }
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ viewport}}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ focalLength\ =\ (cameraPosition\ -\/\ cameraLookAt).length();}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ theta\ =\ fov\ *\ pi\ /\ 180.0;}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ h\ =\ \ tan(theta/2);}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ viewportHEIGHT\ =\ 2.0\ *\ h\ *\ focalLength;}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ viewportWidth\ =\ viewportHEIGHT\ *\ (\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(imgwidth)/imgheight);}
+\DoxyCodeLine{00192\ }
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ w\ =\ normalize(cameraPosition\ -\/\ cameraLookAt);\ }
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ \ \ u\ =\ normalize(cross(cameraUp,\ w));}
+\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \ \ v\ =\ cross(w,\ u);}
+\DoxyCodeLine{00196\ }
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ viewportU\ =\ viewportWidth\ *\ u;}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ viewportV\ =\ viewportHEIGHT\ *\ -\/v;}
+\DoxyCodeLine{00199\ }
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ pixelDeltaU\ =\ viewportU/\ imgwidth;}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ pixelDeltaV\ =\ viewportV\ /\ imgheight;}
+\DoxyCodeLine{00202\ }
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ viewportUpperLeft\ =\ cameraCentre\ -\/\ \ (focalLength\ *\ w)\ -\/\ viewportU/2\ -\/\ viewportV/2;}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ pixelUpperLeft\ =\ viewportUpperLeft\ +\ 0.5\ *\ (pixelDeltaU\ +\ pixelDeltaV);}
+\DoxyCodeLine{00205\ \ \ \ \ \}}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00207\ \ \ \ \ \ \mbox{\hyperlink{structray}{ray}}\ getRay(\textcolor{keywordtype}{int}\ i,\ \textcolor{keywordtype}{int}\ j)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00208\ }
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pixelCentre=\ pixelUpperLeft\ +\ (i\ *\ pixelDeltaU)\ +\ (j\ *\ pixelDeltaV);}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ pixelSample=\ pixelCentre\ +\ randomPSample();}
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ rayOrigin\ =\ cameraCentre;}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ rayDirection\ =\ pixelSample\ -\/\ cameraCentre;\ \textcolor{comment}{//\ direction\ from\ ray\ origin\ to\ randomly\ generated\ pixel\ sample}}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structray}{ray}}(rayOrigin,\ rayDirection);\ \textcolor{comment}{//\ return\ ray\ that\ points\ to\ random\ sample}}
+\DoxyCodeLine{00215\ \ \ \ \ \}}
+\DoxyCodeLine{00216\ }
+\DoxyCodeLine{00217\ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ randomPSample()\textcolor{keyword}{\ const\ }\{\ }
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ generate\ a\ random\ sample\ in\ the\ pixel\ square}}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ px\ =\ -\/0.5\ +\ RandomDouble();}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ py\ =\ -\/0.5\ +\ RandomDouble();}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (px\ *\ pixelDeltaU)\ +\ (py\ *\ pixelDeltaV);}
+\DoxyCodeLine{00222\ \ \ \ \ \}}
+\DoxyCodeLine{00223\ }
+\DoxyCodeLine{00224\ \ \ \ \mbox{\hyperlink{classvec3}{colour}}\ getRayColour(\textcolor{keyword}{const}\ \mbox{\hyperlink{structray}{ray}}\&\ r,\ \textcolor{keywordtype}{int}\ bounces,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classhittable}{hittable}}\&\ scene)\ \{}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classhit_record}{hitRecord}}\ rec;}
+\DoxyCodeLine{00226\ }
+\DoxyCodeLine{00227\ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bounces<=\ 0)}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classvec3}{colour}}(0,0,0);}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ }
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!scene.hit(r,\ \mbox{\hyperlink{classinterval}{interval}}(0.00001,\ infinity),\ rec))\ \{}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ nDir\ =\ normalize(r.direction());\ \textcolor{comment}{//\ return\ sky\ if\ no\ hit}}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ offset\ =\ 0.5*(nDir.y()\ +\ 1.0);}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (1.0-\/offset)*\mbox{\hyperlink{classvec3}{colour}}(1.0,\ 1.0,\ 1.0)\ +\ offset*\mbox{\hyperlink{classvec3}{colour}}(0.357,\ 0.608,\ 0.988);}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structray}{ray}}\ scattered;}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classvec3}{colour}}\ attenuation;}
+\DoxyCodeLine{00240\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classvec3}{colour}}\ lightColour\ =\ rec.m-\/>emitted(rec.u,\ rec.v,\ rec.p);}
+\DoxyCodeLine{00241\ }
+\DoxyCodeLine{00242\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!rec.m-\/>scatter(r,\ rec,\ attenuation,\ scattered))}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lightColour;}
+\DoxyCodeLine{00244\ }
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classvec3}{colour}}\ accumulatedColour\ =\ attenuation\ *\ getRayColour(scattered,\ bounces-\/1,\ scene);}
+\DoxyCodeLine{00246\ }
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ lightColour\ +\ accumulatedColour;}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00255\ \ \ \ \ \}}
+\DoxyCodeLine{00256\ \};}
+\DoxyCodeLine{00257\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

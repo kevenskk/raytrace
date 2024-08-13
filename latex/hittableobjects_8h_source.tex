@@ -1,0 +1,42 @@
+\doxysection{hittableobjects.\+h}
+\hypertarget{hittableobjects_8h_source}{}\label{hittableobjects_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ HITTABLE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ HITTABLE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}ray.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}interval.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmaterial}{material}};}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhit_record}{hitRecord}}\ \{}
+\DoxyCodeLine{00012\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{classvec3}{point3}}\ p;}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ normal;}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keywordtype}{double}\ t;}
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keywordtype}{double}\ u;}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordtype}{double}\ v;}
+\DoxyCodeLine{00018\ \ \ \ \ shared\_ptr<material>\ m;}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \ \textcolor{keywordtype}{bool}\ front\_face;}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordtype}{void}\ set\_face\_normal(\textcolor{keyword}{const}\ \mbox{\hyperlink{structray}{ray}}\&\ r,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{vec3}}\&\ outward\_normal)\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ }
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ front\_face\ =\ dot(r.direction(),\ outward\_normal)\ <\ 0;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ normal\ =\ front\_face\ ?\ outward\_normal\ :\ -\/outward\_normal;}
+\DoxyCodeLine{00027\ \ \ \ \ \}}
+\DoxyCodeLine{00028\ \};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classhittable}{hittable}}\ \{}
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classhittable}{\string~hittable}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ hit(\textcolor{keyword}{const}\ \mbox{\hyperlink{structray}{ray}}\&\ r,\ \mbox{\hyperlink{classinterval}{interval}}\ tmintmax,\ \mbox{\hyperlink{classhit_record}{hitRecord}}\&\ rec)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00035\ \};}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

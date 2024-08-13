@@ -1,0 +1,44 @@
+\doxysection{metal Class Reference}
+\hypertarget{classmetal}{}\label{classmetal}\index{metal@{metal}}
+
+
+Inheritance diagram for metal\+:
+% FIG 0
+
+
+Collaboration diagram for metal\+:
+% FIG 1
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classmetal_ab3a3234ec784fc64a841d1a24ea34d1d}\label{classmetal_ab3a3234ec784fc64a841d1a24ea34d1d} 
+{\bfseries metal} (const \mbox{\hyperlink{classvec3}{colour}} \&a, const float \&r)
+\item 
+\Hypertarget{classmetal_ae16830ce11bae4697b23260dc5b3738c}\label{classmetal_ae16830ce11bae4697b23260dc5b3738c} 
+void {\bfseries set\+Albedo} (const \mbox{\hyperlink{classvec3}{colour}} \&new\+Albedo)
+\item 
+bool \mbox{\hyperlink{classmetal_ad8e40fae08899ba0ee2e700e329d2deb}{scatter}} (const \mbox{\hyperlink{structray}{ray}} \&r, const \mbox{\hyperlink{classhit_record}{hit\+Record}} \&rec, \mbox{\hyperlink{classvec3}{colour}} \&attenuation, \mbox{\hyperlink{structray}{ray}} \&scattered) const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classmaterial}{material}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{classvec3}{colour}} {\bfseries emitted} (double u, double v, const \mbox{\hyperlink{classvec3}{point3}} \&p) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classmetal_ad8e40fae08899ba0ee2e700e329d2deb}\label{classmetal_ad8e40fae08899ba0ee2e700e329d2deb} 
+\index{metal@{metal}!scatter@{scatter}}
+\index{scatter@{scatter}!metal@{metal}}
+\doxysubsubsection{\texorpdfstring{scatter()}{scatter()}}
+{\footnotesize\ttfamily bool metal\+::scatter (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structray}{ray}} \&}]{r,  }\item[{const \mbox{\hyperlink{classhit_record}{hit\+Record}} \&}]{rec,  }\item[{\mbox{\hyperlink{classvec3}{colour}} \&}]{attenuation,  }\item[{\mbox{\hyperlink{structray}{ray}} \&}]{scattered }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classmaterial}{material}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+material.\+h\end{DoxyCompactItemize}

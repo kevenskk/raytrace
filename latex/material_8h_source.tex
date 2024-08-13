@@ -1,0 +1,130 @@
+\doxysection{material.\+h}
+\hypertarget{material_8h_source}{}\label{material_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ MATERIAL\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ MATERIAL\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}helper.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}ray.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}colour.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}hittablelist.h"{}}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ "{}texture.h"{}}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }hit\_record;}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmaterial}{material}}\ \{}
+\DoxyCodeLine{00013\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classmaterial}{\string~material}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00015\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classvec3}{colour}}\ emitted(\textcolor{keywordtype}{double}\ u,\ \textcolor{keywordtype}{double}\ v,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{point3}}\&\ p)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classvec3}{colour}}(0,0,0);}
+\DoxyCodeLine{00017\ \ \ \ \ \}}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ scatter(}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structray}{ray}}\&\ r,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classhit_record}{hitRecord}}\&\ rec,\ \mbox{\hyperlink{classvec3}{colour}}\&\ attenuation,\ \mbox{\hyperlink{structray}{ray}}\&\ scattered)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00020\ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classdiffuse}{diffuse}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classmaterial}{material}}\ \{\ \textcolor{comment}{//\ ideal\ diffuse\ material\ (Lambertian)}}
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{classdiffuse}{diffuse}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{colour}}\&\ a)\ :\ albedo(make\_shared<solid\_colour>(a))\ \{\}}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{classdiffuse}{diffuse}}(shared\_ptr<texture>\ a)\ :\ albedo(a)\ \{\}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordtype}{void}\ setAlbedo(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{colour}}\&\ newAlbedo)\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{comment}{//albedo\ =\ newAlbedo;}}
+\DoxyCodeLine{00029\ \ \ \ \ \}}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ scatter(\textcolor{keyword}{const}\ \mbox{\hyperlink{structray}{ray}}\&\ r,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classhit_record}{hitRecord}}\&\ rec,\ \mbox{\hyperlink{classvec3}{colour}}\&\ attenuation,\ \mbox{\hyperlink{structray}{ray}}\&\ scattered)\textcolor{keyword}{}}
+\DoxyCodeLine{00031\ \textcolor{keyword}{\ \ \ \ const\ override\ }\{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ scatter\_direction\ =\ rec.normal\ +\ RandomUnitVector();}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (scatter\_direction.veczero())}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ scatter\_direction\ =\ rec.normal;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ scattered\ =\ \mbox{\hyperlink{structray}{ray}}(rec.p,\ scatter\_direction);}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ attenuation\ =\ albedo-\/>value(rec.u,\ rec.v,\ rec.p);}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00043\ \ \ \ \ \}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ shared\_ptr<texture>\ albedo;}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classmetal}{metal}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classmaterial}{material}}\ \{\ \textcolor{comment}{//\ metal\ material\ }}
+\DoxyCodeLine{00051\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00052\ \ \ \ \ \mbox{\hyperlink{classmetal}{metal}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{colour}}\&\ a,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\&\ r)\ :\ albedo(a),\ roughness(r\ <\ 1\ ?\ r\ :\ 1)\ \{\}}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{void}\ setAlbedo(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{colour}}\&\ newAlbedo)\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ albedo\ =\ newAlbedo;}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ scatter(\textcolor{keyword}{const}\ \mbox{\hyperlink{structray}{ray}}\&\ r,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classhit_record}{hitRecord}}\&\ rec,\ \mbox{\hyperlink{classvec3}{colour}}\&\ attenuation,\ \mbox{\hyperlink{structray}{ray}}\&\ scattered)\textcolor{keyword}{}}
+\DoxyCodeLine{00057\ \textcolor{keyword}{\ \ \ \ const\ override\ }\{}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ perturbedN\ =\ rec.normal\ +\ roughness\ *\ RandomUnitVector();\ \textcolor{comment}{//\ normal\ is\ pertubed\ instead\ of\ reflecting\ perfectly}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ reflected\ =\ reflect(normalize(r.direction()),perturbedN);}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ scattered\ =\ \mbox{\hyperlink{structray}{ray}}(rec.p,\ reflected);}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ attenuation\ =\ albedo;}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (dot(scattered.direction(),\ rec.normal)\ >\ 0);}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00070\ \ \ \ \ \mbox{\hyperlink{classvec3}{colour}}\ albedo;}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{double}\ roughness;}
+\DoxyCodeLine{00072\ \};}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classrefractive}{refractive}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classmaterial}{material}}\ \{\ \textcolor{comment}{//\ refractive\ material\ based\ on\ Snell's\ law}}
+\DoxyCodeLine{00075\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00076\ \ \ \ \ \mbox{\hyperlink{classrefractive}{refractive}}(\mbox{\hyperlink{classvec3}{colour}}\ a,\ \textcolor{keywordtype}{double}\ n1,\ \textcolor{keywordtype}{double}\ n2)\ :\ albedo(a),\ n1(n1),\ n2(n2)\ \{\}\ \textcolor{comment}{//\ refracive\ indices\ of\ the\ two\ media}}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{void}\ setAlbedo(\textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{colour}}\&\ newAlbedo)\ \{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ albedo\ =\ newAlbedo;}
+\DoxyCodeLine{00079\ \ \ \ \ \}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ scatter(\textcolor{keyword}{const}\ \mbox{\hyperlink{structray}{ray}}\&\ r,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classhit_record}{hitRecord}}\&\ rec,\ \mbox{\hyperlink{classvec3}{colour}}\&\ attenuation,\ \mbox{\hyperlink{structray}{ray}}\&\ scattered)\textcolor{keyword}{}}
+\DoxyCodeLine{00081\ \textcolor{keyword}{\ \ \ \ const\ override\ }\{}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ attenuation\ =\ albedo;}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ n1\_over\_n2\ =\ rec.front\_face\ ?\ (1.0/n2)\ :\ n2;\ \textcolor{comment}{//\ ratio\ of\ the\ two\ indices}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classvec3}{vec3}}\ refracted\ =\ refract(r.direction(),\ rec.normal,\ n1\_over\_n2);\ \textcolor{comment}{//\ generate\ refracted\ ray}}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ scattered\ =\ \mbox{\hyperlink{structray}{ray}}(rec.p,\ refracted);\ \textcolor{comment}{//\ scattered\ ray\ is\ computed\ as\ the\ new\ ray}}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00090\ \ \ \ \ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{double}\ n1;\ \textcolor{comment}{//\ Index\ of\ Refraction}}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{double}\ n2;}
+\DoxyCodeLine{00095\ \ \ \ \ \mbox{\hyperlink{classvec3}{colour}}\ albedo;}
+\DoxyCodeLine{00096\ \};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00102\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classemissive}{emissive}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classmaterial}{material}}\ \{}
+\DoxyCodeLine{00103\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00104\ \ \ \ \ \mbox{\hyperlink{classemissive}{emissive}}(shared\_ptr<texture>\ a)\ :\ emit(a)\ \{\}}
+\DoxyCodeLine{00105\ \ \ \ \ \mbox{\hyperlink{classemissive}{emissive}}(\mbox{\hyperlink{classvec3}{colour}}\ c)\ :\ emit(make\_shared<solid\_colour>(c))\ \{\}}
+\DoxyCodeLine{00106\ \ \ \ \ }
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordtype}{bool}\ scatter(\textcolor{keyword}{const}\ \mbox{\hyperlink{structray}{ray}}\&\ r\_in,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classhit_record}{hitRecord}}\&\ rec,\ \mbox{\hyperlink{classvec3}{colour}}\&\ attenuation,\ \mbox{\hyperlink{structray}{ray}}\&\ scattered)\textcolor{keyword}{}}
+\DoxyCodeLine{00108\ \textcolor{keyword}{\ \ \ \ const\ override\ }\{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00110\ \ \ \ \ \}}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \ \ \ \ \mbox{\hyperlink{classvec3}{colour}}\ emitted(\textcolor{keywordtype}{double}\ u,\ \textcolor{keywordtype}{double}\ v,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classvec3}{point3}}\&\ p)\textcolor{keyword}{\ const\ override\ }\{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ emit-\/>value(u,\ v,\ p);}
+\DoxyCodeLine{00114\ \ \ \ \ \}}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00117\ \ \ \ \ shared\_ptr<texture>\ emit;}
+\DoxyCodeLine{00118\ \};}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ }
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ }
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

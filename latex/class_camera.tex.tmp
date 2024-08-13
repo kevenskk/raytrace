@@ -1,0 +1,62 @@
+\doxysection{Camera Class Reference}
+\hypertarget{class_camera}{}\label{class_camera}\index{Camera@{Camera}}
+
+
+Collaboration diagram for Camera\+:
+% FIG 0
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_camera_ae7c1d8816b95ed029c7e02ec12889bd6}\label{class_camera_ae7c1d8816b95ed029c7e02ec12889bd6} 
+{\bfseries Camera} (SDL\+\_\+\+Window \texorpdfstring{$\ast$}{*}window, SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*}renderer)
+\item 
+\Hypertarget{class_camera_ad63c4568bea3a4d8e00b2ccf2853b874}\label{class_camera_ad63c4568bea3a4d8e00b2ccf2853b874} 
+void {\bfseries input} ()
+\item 
+\Hypertarget{class_camera_ad687e2665fe96d66e7be1d0c4d265e7c}\label{class_camera_ad687e2665fe96d66e7be1d0c4d265e7c} 
+void {\bfseries render} (const \mbox{\hyperlink{classhittable}{hittable}} \&scene)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_camera_adf1b0e515c5c24d1a5da25e0d36698ac}\label{class_camera_adf1b0e515c5c24d1a5da25e0d36698ac} 
+SDL\+\_\+\+Renderer \texorpdfstring{$\ast$}{*} {\bfseries renderer}
+\item 
+\Hypertarget{class_camera_ae32598ecc427fb040fdfc4e74d454963}\label{class_camera_ae32598ecc427fb040fdfc4e74d454963} 
+SDL\+\_\+\+Window \texorpdfstring{$\ast$}{*} {\bfseries window}
+\item 
+\Hypertarget{class_camera_a082ad685e5fd6f7c37f570c15584ee23}\label{class_camera_a082ad685e5fd6f7c37f570c15584ee23} 
+double {\bfseries aspect\+Ratio}
+\item 
+\Hypertarget{class_camera_a590c3aac65c483addcfa85f08c77905a}\label{class_camera_a590c3aac65c483addcfa85f08c77905a} 
+int {\bfseries imgwidth}
+\item 
+\Hypertarget{class_camera_a2d14c34b3958a5f907ed1bb97b0fd6ea}\label{class_camera_a2d14c34b3958a5f907ed1bb97b0fd6ea} 
+int {\bfseries imgheight}
+\item 
+\Hypertarget{class_camera_afc8cc52d723e570c43db1c75f6545091}\label{class_camera_afc8cc52d723e570c43db1c75f6545091} 
+int {\bfseries spp}
+\item 
+\Hypertarget{class_camera_adac30beb6d8e7d417572b5e5aa9d6a01}\label{class_camera_adac30beb6d8e7d417572b5e5aa9d6a01} 
+int {\bfseries bounces}
+\item 
+\Hypertarget{class_camera_aab500765f55f9160f3e258de2fe89995}\label{class_camera_aab500765f55f9160f3e258de2fe89995} 
+\mbox{\hyperlink{classvec3}{colour}} {\bfseries bg}
+\item 
+\Hypertarget{class_camera_a72670b36aa95f2ce978561ff108bea38}\label{class_camera_a72670b36aa95f2ce978561ff108bea38} 
+int {\bfseries fov}
+\item 
+\Hypertarget{class_camera_aaa14d259a07011c60ee8cf39a5418cd9}\label{class_camera_aaa14d259a07011c60ee8cf39a5418cd9} 
+\mbox{\hyperlink{classvec3}{point3}} {\bfseries camera\+Position} = \mbox{\hyperlink{classvec3}{point3}}(0, 0, -\/1)
+\item 
+\Hypertarget{class_camera_ad24b483b73f0b0178f4636a9018e5576}\label{class_camera_ad24b483b73f0b0178f4636a9018e5576} 
+\mbox{\hyperlink{classvec3}{point3}} {\bfseries camera\+Look\+At} = \mbox{\hyperlink{classvec3}{point3}}(0, 0, 0)
+\item 
+\Hypertarget{class_camera_a349261f80362ed1a72dbef29538deb00}\label{class_camera_a349261f80362ed1a72dbef29538deb00} 
+\mbox{\hyperlink{classvec3}{vec3}} {\bfseries camera\+Up} = \mbox{\hyperlink{classvec3}{vec3}}(0, 1, 0)
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+camera.\+h\end{DoxyCompactItemize}

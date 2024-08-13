@@ -1,0 +1,75 @@
+\doxysection{stbimage.\+h}
+\hypertarget{stbimage_8h_source}{}\label{stbimage_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ STB\_IMAGE\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ STB\_IMAGE\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\ \ \ \ \#pragma\ warning\ (push,\ 0)}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#define\ STB\_IMAGE\_IMPLEMENTATION}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#define\ STBI\_FAILURE\_USERMSG}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ "{}stb\_image.h"{}}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ "{}helper.h"{}}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <cstdlib>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classstbimage}{stbimage}}\ \{}
+\DoxyCodeLine{00017\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{classstbimage}{stbimage}}()\ :\ pixelData(\textcolor{keyword}{nullptr})\ \{\}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{classstbimage}{stbimage}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ image\_filename)\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ filename\ =\ std::string(image\_filename);}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ imagedir\ =\ getenv(\textcolor{stringliteral}{"{}IMAGES"{}});}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (imagedir\ \&\&\ load(std::string(imagedir)\ +\ \textcolor{stringliteral}{"{}/"{}}\ +\ image\_filename))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (load(filename))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (load(\textcolor{stringliteral}{"{}assets/"{}}\ +\ filename))\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00029\ \ \ \ \ }
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}File\ not\ found:\ '"{}}\ <<\ image\_filename\ <<\ \textcolor{stringliteral}{"{}'.\(\backslash\)n"{}};}
+\DoxyCodeLine{00032\ \ \ \ \ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{classstbimage}{\string~stbimage}}()\ \{\ STBI\_FREE(pixelData);\ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{bool}\ load(\textcolor{keyword}{const}\ std::string\ filename)\ \{}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ n\ =\ bytes\_per\_pixel;\ }
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ pixelData\ =\ stbi\_load(filename.c\_str(),\ \&imgwidth,\ \&imgheight,\ \&n,\ bytes\_per\_pixel);}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ bytes\_per\_scanline\ =\ imgwidth\ *\ bytes\_per\_pixel;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pixelData\ !=\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00042\ \ \ \ \ \}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{int}\ width()\textcolor{keyword}{\ \ const\ }\{\ \textcolor{keywordflow}{return}\ (pixelData\ ==\ \textcolor{keyword}{nullptr})\ ?\ 0\ :\ imgwidth;\ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{int}\ height()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (pixelData\ ==\ \textcolor{keyword}{nullptr})\ ?\ 0\ :\ imgheight;\ \}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*\ pixel\_data(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{classvec3}{colour}}[]\ =\ \{\ 255,\ 0,\ 255\ \};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pixelData\ ==\ \textcolor{keyword}{nullptr})\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classvec3}{colour}};;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ x\ =\ clamp(x,\ 0,\ imgwidth);}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ y\ =\ clamp(y,\ 0,\ imgheight);}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ pixelData\ +\ y*bytes\_per\_scanline\ +\ x*bytes\_per\_pixel;}
+\DoxyCodeLine{00055\ \ \ \ \ \}}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ bytes\_per\_pixel\ =\ 3;}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ *pixelData;}
+\DoxyCodeLine{00060\ \ \ \ \ \textcolor{keywordtype}{int}\ imgwidth,\ imgheight;}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{int}\ bytes\_per\_scanline;}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ }
+\DoxyCodeLine{00064\ \};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#ifdef\ \_MSC\_VER}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\ \ \ \ \#pragma\ warning\ (pop)}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

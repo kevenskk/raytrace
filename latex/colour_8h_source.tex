@@ -1,0 +1,40 @@
+\doxysection{colour.\+h}
+\hypertarget{colour_8h_source}{}\label{colour_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ COLOR\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ COLOR\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}vec3.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}interval.h"{}}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}helper.h"{}}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{using\ }\mbox{\hyperlink{classvec3}{colour}}\ =\ \mbox{\hyperlink{classvec3}{vec3}};}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{keywordtype}{void}\ drawColour(std::ostream\ \&out,\ \mbox{\hyperlink{classvec3}{colour}}\ pixelColour,\ \textcolor{keywordtype}{int}\ spp)\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{auto}\ r\ =\ pixelColour.r();}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{auto}\ g\ =\ pixelColour.g();}
+\DoxyCodeLine{00019\ \ \ \ \ \textcolor{keyword}{auto}\ b\ =\ pixelColour.b();}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{float}\ scale\ =\ 1.0\ /\ spp;\ \textcolor{comment}{//\ scale\ resulting\ rgb\ values\ by\ number\ of\ samples}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ r\ =\ sqrt(r*scale);\ \textcolor{comment}{//\ linear\ to\ gamma\ space\ correction}}
+\DoxyCodeLine{00024\ \ \ \ \ g\ =\ sqrt(g*scale);}
+\DoxyCodeLine{00025\ \ \ \ \ b\ =\ sqrt(b*scale);}
+\DoxyCodeLine{00026\ \ \ \ \ }
+\DoxyCodeLine{00027\ \ \ \ \ out\ <<\ static\_cast<int>(256\ *\ clamp(r,0.000,\ 0.999))\ <<\ \textcolor{charliteral}{'\ '}}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ <<\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(256\ *\ clamp(g,0.000,\ 0.999))\ <<\ \textcolor{charliteral}{'\ '}}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ <<\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(256\ *\ clamp(b,0.000,\ 0.999))\ <<\ \textcolor{charliteral}{'\(\backslash\)n'};}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00033\ \}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
